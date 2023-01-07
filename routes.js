@@ -1,14 +1,13 @@
-import { isProductionBuild } from '@layer0/core/environment'
-import { BACKENDS } from '@layer0/core/constants'
-import { Router } from '@layer0/core/router'
+import { Router } from '@edgio/core/router'
+import { isProductionBuild } from '@edgio/core/environment'
 
 const router = new Router()
 
 if (isProductionBuild()) {
   router.static('dist/static')
 } else {
-  router.fallback(({ proxy }) => {
-    proxy(BACKENDS.js)
+  router.fallback(({ renderWithApp }) => {
+    renderWithApp()
   })
 }
 
